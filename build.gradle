@@ -1,0 +1,37 @@
+plugins {
+    id 'fabric-loom' version '1.6-SNAPSHOT'
+    id 'maven-publish'
+}
+
+group = 'com.jurassicboy26'
+version = '1.0.0'
+archivesBaseName = 'trexmod'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraft:client:1.21.4'
+    mappings 'net.fabricmc:yarn:1.21.4+build.1:v2'
+    modImplementation 'net.fabricmc:fabric-loader:0.15.11'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.96.11+1.21.4'
+}
+
+loom {
+    refreshVersions = true
+    ide {
+        runConfigs {
+            create('client') {
+                name = 'Client'
+                mainClass = 'net.fabricmc.devlaunchinjector.Main'
+                programArgs = ['--assetIndex', '1.21.4', '--assetsDir', 'assets', '--accessToken', 'FabricMC']
+                vmArgs = ['-Dfabric.dli.config=run/client.json']
+            }
+        }
+    }
+}
